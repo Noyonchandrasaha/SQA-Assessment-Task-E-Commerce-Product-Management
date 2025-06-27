@@ -58,7 +58,7 @@ SQA-Assessment-Task-E-Commerce-Product-Management/
 
 | Testing Type | Tool/Method | Test Cases | Coverage |
 |--------------|-------------|------------|----------|
-| **Manual Testing** | Excel Documentation | 5 Test Cases | Product CRUD Operations |
+| **Manual Testing** | Excel Documentation | 5 Test Scenarios  | Product CRUD Operations |
 | **API Testing** | Postman Collection | 7 Endpoints | Complete API Validation |
 | **Automation Testing** | Cypress Framework | 10 Test Scenarios | End-to-End User Flows |
 
