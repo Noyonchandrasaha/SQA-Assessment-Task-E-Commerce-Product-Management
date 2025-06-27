@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "5f2d42fc-9824-4875-99a5-715532a9caf6",
+		"name": "E-Commerce Product Management",
+		"description": "#### **Postman Collection Documentation**\n\n**Project Title:** API Testing – E-Commerce Product Management  \n**Base URL:** `https://fakestoreapi.com`  \n**Tool Used:** Postman  \n**Collection Name:** `E-Commerce Product API Testing`\n\n#### API Test Cases\n\n#### 1\\. **GET /products**\n\n**Purpose:** Retrieve a list of all products.\n\n- **Request Type:** GET\n    \n- **URL:** `https://fakestoreapi.com/products`\n    \n- **Validations:**\n    \n    - Status Code: `200 OK`\n        \n    - Response Time: `<1000ms`\n        \n    - Data: Should return a JSON array of products\n        \n- **Test Script (Postman):**\n    \n\n```\njavascriptCopyEditpm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\npm.test(\"Response time is less than 1000ms\", () => pm.expect(pm.response.responseTime).to.be.below(1000));\npm.test(\"Response is an array\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(Array.isArray(jsonData)).to.be.true;\n});\n\n ```\n\n---\n\n#### 2\\. **GET /products/{id}**\n\n**Purpose:** Retrieve a single product by ID\n\n- **Example URL:** `https://fakestoreapi.com/products/1`\n    \n- **Validations:**\n    \n    - Status Code: `200 OK`\n        \n    - Data Integrity: Check if product object contains fields like `title`, `price`, `category`\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Valid product returned\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"title\");\n    pm.expect(jsonData).to.have.property(\"price\");\n});\n\n ```\n\n---\n\n#### 3\\. **POST /carts**\n\n**Purpose:** Create a new cart\n\n- **Request Type:** POST\n    \n- **URL:** `https://fakestoreapi.com/carts`\n    \n- **Request Body (raw JSON):**\n    \n\n```\njsonCopyEdit{\n  \"userId\": 5,\n  \"date\": \"2020-02-03\",\n  \"products\": [\n    { \"productId\": 1, \"quantity\": 3 }\n  ]\n}\n\n ```\n\n- **Validations:**\n    \n    - Status Code: `200 or 201`\n        \n    - Response should include the created cart ID\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Cart created successfully\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"id\");\n});\n\n ```\n\n---\n\n#### 4\\. **PUT /carts/{id}**\n\n**Purpose:** Update an existing cart\n\n- **Example URL:** `https://fakestoreapi.com/carts/1`\n    \n- **Request Body:** Same structure as POST above\n    \n- **Validations:**\n    \n    - Status Code: `200 OK`\n        \n    - Data integrity: Updated values should reflect in the response\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Cart updated\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"id\");\n});\n\n ```\n\n---\n\n#### 5\\. **DELETE /carts/{id}**\n\n**Purpose:** Delete a cart by ID\n\n- **URL:** `https://fakestoreapi.com/carts/1`\n    \n- **Request Type:** DELETE\n    \n- **Validations:**\n    \n    - Status Code: `200 OK` or `204 No Content`\n        \n    - Response body might be empty or confirm deletion\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Cart deleted\", () => pm.response.to.have.status(200));\n\n ```\n\n---\n\n#### 6\\. **GET /users**\n\n**Purpose:** Get a list of all users\n\n- **URL:** `https://fakestoreapi.com/users`\n    \n- **Validations:**\n    \n    - Status Code: `200 OK`\n        \n    - Should return array of user objects\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Users returned\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(Array.isArray(jsonData)).to.be.true;\n});\n\n ```\n\n---\n\n#### 7\\. **POST /auth/login**\n\n**Purpose:** Verify login using provided username and password\n\n- **URL:** `https://fakestoreapi.com/auth/login`\n    \n- **Request Body (raw JSON):**\n    \n\n```\njsonCopyEdit{\n  \"username\": \"mor_2314\",\n  \"password\": \"83r5^_\"\n}\n\n ```\n\n- **Validations:**\n    \n    - Status Code: `200 OK`\n        \n    - Response should include a token\n        \n- **Test Script:**\n    \n\n```\njavascriptCopyEditpm.test(\"Login successful and token received\", () => {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"token\");\n});\n\n ```\n\n  \n  \n\n#### Deliverables Summary\n\n| # | API | Method | Test Case Description | Status | Validation |\n| --- | --- | --- | --- | --- | --- |\n| 1 | `/products` | GET | List all products | ✅ | 200 OK, Array |\n| 2 | `/products/{id}` | GET | Get one product | ✅ | 200 OK, Fields check |\n| 3 | `/carts` | POST | Create a cart | ✅ | 200/201, Cart ID present |\n| 4 | `/carts/{id}` | PUT | Update cart | ✅ | 200 OK, Response fields |\n| 5 | `/carts/{id}` | DELETE | Delete cart | ✅ | 200/204 |\n| 6 | `/users` | GET | List users | ✅ | 200 OK, Array |\n| 7 | `/auth/login` | POST | Test login | ✅ | 200 OK, Token present |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37968262",
+		"_collection_link": "https://noyon-assignment.postman.co/workspace/Noyon-Assignment-Workspace~32ce52f4-5d3a-4ff0-874e-e81edfcfc923/collection/37968262-5f2d42fc-9824-4875-99a5-715532a9caf6?action=share&source=collection_link&creator=37968262"
+	},
+	"item": [
+		{
+			"name": "GET /products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response time is less than 1000ms\", () => pm.expect(pm.response.responseTime).to.be.below(1000));\r",
+							"pm.test(\"Response is an array\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /products/{id}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Valid product returned\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"price\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /carts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Cart created successfully\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5,\r\n  \"date\": \"2025-06-26\",\r\n  \"products\": [\r\n    { \"productId\": 1, \"quantity\": 3 }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/carts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /carts/{id}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Cart updated\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5,\r\n  \"date\": \"2025-06-27\",\r\n  \"products\": [\r\n    { \"productId\": 1, \"quantity\": 3 },\r\n    {\"productId\":3,\"quantity\":2}\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/carts/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"carts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /carts/{id}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Cart deleted\", () => pm.response.to.have.status(200));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/carts/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"carts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Users returned\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /auth/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Login successful and token received\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"token\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"mor_2314\",\r\n  \"password\": \"83r5^_\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
